@@ -16,12 +16,17 @@ class AppCoordinator {
     private lazy var session: Session = {
         let session = Session()
         session.delegate = self
+        session.pathConfiguration = PathConfiguration(sources: [
+            .file(Bundle.main.url(forResource: "PathConfiguration", withExtension: "json")!),
+        ])
         return session
     }()
 
-    private func visit(url: URL, action: VisitAction = .advance) {
+    private func visit(url: URL, action: VisitAction = .advance, properties: PathProperties = [:]) {
         let viewController = VisitableViewController(url: url)
-        if action == .advance {
+        if properties["presentation"] as? String == "modal" {
+            navigationController.present(viewController, animated: true)
+        } else if action == .advance {
             navigationController.pushViewController(viewController, animated: true)
         } else {
             navigationController.viewControllers = Array(navigationController.viewControllers.dropLast()) + [viewController]
@@ -32,7 +37,7 @@ class AppCoordinator {
 
 extension AppCoordinator: SessionDelegate {
     func session(_ session: Session, didProposeVisit proposal: VisitProposal) {
-        visit(url: proposal.url, action: proposal.options.action)
+        visit(url: proposal.url, action: proposal.options.action, properties: proposal.properties)
     }
 
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, error: Error) {

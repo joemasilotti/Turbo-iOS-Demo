@@ -1,0 +1,12 @@
+{
+  "rules": [
+    {
+      "patterns": [
+        "/new$"
+      ],
+      "properties": {
+        "presentation": "modal"
+      }
+    }
+  ]
+}
