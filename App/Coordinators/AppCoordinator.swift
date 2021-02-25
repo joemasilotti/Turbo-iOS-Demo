@@ -18,16 +18,20 @@ class AppCoordinator {
         return session
     }()
 
-    private func visit(url: URL) {
+    private func visit(url: URL, action: VisitAction = .advance) {
         let viewController = VisitableViewController(url: url)
-        navigationController.pushViewController(viewController, animated: true)
+        if action == .advance {
+            navigationController.pushViewController(viewController, animated: true)
+        } else {
+            navigationController.viewControllers = Array(navigationController.viewControllers.dropLast()) + [viewController]
+        }
         session.visit(viewController)
     }
 }
 
 extension AppCoordinator: SessionDelegate {
     func session(_ session: Session, didProposeVisit proposal: VisitProposal) {
-        visit(url: proposal.url)
+        visit(url: proposal.url, action: proposal.options.action)
     }
 
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, error: Error) {
