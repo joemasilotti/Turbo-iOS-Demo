@@ -7,6 +7,14 @@
       "properties": {
         "presentation": "modal"
       }
+    },
+    {
+      "patterns": [
+        "/numbers"
+      ],
+      "properties": {
+        "controller": "numbers"
+      }
     }
   ]
 }

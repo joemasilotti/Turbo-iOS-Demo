@@ -15,6 +15,7 @@
 		84895D8925E81A5300D5EEC0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84895D8825E81A5300D5EEC0 /* AppCoordinator.swift */; };
 		84895D8E25E83A0700D5EEC0 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84895D8D25E83A0700D5EEC0 /* ErrorView.swift */; };
 		84895D9425E85ED700D5EEC0 /* PathConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 84895D9225E85DE500D5EEC0 /* PathConfiguration.json */; };
+		84895DA525E86D5D00D5EEC0 /* NumbersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84895DA425E86D5D00D5EEC0 /* NumbersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		84895D8825E81A5300D5EEC0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		84895D8D25E83A0700D5EEC0 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		84895D9225E85DE500D5EEC0 /* PathConfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PathConfiguration.json; sourceTree = "<group>"; };
+		84895DA425E86D5D00D5EEC0 /* NumbersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				84895D8225E8172C00D5EEC0 /* Delegates */,
 				84895D8125E8172300D5EEC0 /* Resources */,
 				84895D7C25E8162E00D5EEC0 /* Supporting Files */,
+				84895DA325E86D5000D5EEC0 /* View Controllers */,
 				84895D8C25E839FE00D5EEC0 /* Views */,
 			);
 			path = App;
@@ -110,6 +113,14 @@
 				84895D8D25E83A0700D5EEC0 /* ErrorView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		84895DA325E86D5000D5EEC0 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				84895DA425E86D5D00D5EEC0 /* NumbersViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84895D8925E81A5300D5EEC0 /* AppCoordinator.swift in Sources */,
+				84895DA525E86D5D00D5EEC0 /* NumbersViewController.swift in Sources */,
 				84895D6325E815E100D5EEC0 /* AppDelegate.swift in Sources */,
 				84895D6525E815E100D5EEC0 /* SceneDelegate.swift in Sources */,
 				84895D8E25E83A0700D5EEC0 /* ErrorView.swift in Sources */,

@@ -25,7 +25,13 @@ class AppCoordinator {
     }
 
     private func visit(url: URL, action: VisitAction = .advance, properties: PathProperties = [:]) {
-        let viewController = VisitableViewController(url: url)
+        let viewController: UIViewController
+
+        if properties["controller"] as? String == "numbers" {
+            viewController = NumbersViewController()
+        } else {
+            viewController = VisitableViewController(url: url)
+        }
 
         if properties["presentation"] as? String == "modal" {
             navigationController.present(viewController, animated: true)
@@ -35,10 +41,12 @@ class AppCoordinator {
             navigationController.viewControllers = Array(navigationController.viewControllers.dropLast()) + [viewController]
         }
 
-        if properties["presentation"] as? String == "modal" {
-            modalSession.visit(viewController)
-        } else {
-            session.visit(viewController)
+        if let visitable = viewController as? Visitable {
+            if properties["presentation"] as? String == "modal" {
+                modalSession.visit(visitable)
+            } else {
+                session.visit(visitable)
+            }
         }
     }
 }
