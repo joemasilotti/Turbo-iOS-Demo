@@ -1,3 +1,4 @@
+import SwiftUI
 import Turbo
 import UIKit
 
@@ -35,6 +36,14 @@ extension AppCoordinator: SessionDelegate {
     }
 
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, error: Error) {
-        print("didFailRequestForVisitable: \(error)")
+        guard let topViewController = navigationController.topViewController else { return }
+
+        let swiftUIView = ErrorView(errorMessage: error.localizedDescription)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+
+        topViewController.addChild(hostingController)
+        hostingController.view.frame = topViewController.view.frame
+        topViewController.view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: topViewController)
     }
 }
