@@ -25,29 +25,34 @@ class AppCoordinator {
     }
 
     private func visit(url: URL, action: VisitAction = .advance, properties: PathProperties = [:]) {
-        let viewController: UIViewController
+        let viewController = makeViewController(for: url, from: properties)
+        let modal = properties["presentation"] as? String == "modal"
+        navigate(to: viewController, via: action, asModal: modal)
+        visit(viewController, as: modal)
+    }
 
+    private func makeViewController(for url: URL, from properties: PathProperties) -> UIViewController {
         if properties["controller"] as? String == "numbers" {
-            viewController = NumbersViewController()
-        } else {
-            viewController = VisitableViewController(url: url)
+            return NumbersViewController()
         }
+        return VisitableViewController(url: url)
+    }
 
-        if properties["presentation"] as? String == "modal" {
+    private func navigate(to viewController: UIViewController, via action: VisitAction, asModal modal: Bool) {
+        if modal {
             navigationController.present(viewController, animated: true)
         } else if action == .advance {
             navigationController.pushViewController(viewController, animated: true)
         } else {
             navigationController.viewControllers = Array(navigationController.viewControllers.dropLast()) + [viewController]
         }
+    }
 
-        if let visitable = viewController as? Visitable {
-            if properties["presentation"] as? String == "modal" {
-                modalSession.visit(visitable)
-            } else {
-                session.visit(visitable)
-            }
-        }
+    private func visit(_ viewController: UIViewController, as modal: Bool) {
+        guard let visitable = viewController as? Visitable else { return }
+
+        let session = modal ? modalSession : self.session
+        session.visit(visitable)
     }
 }
 
