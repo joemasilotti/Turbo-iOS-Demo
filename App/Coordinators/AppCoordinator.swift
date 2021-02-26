@@ -1,8 +1,10 @@
+import SafariServices
 import SwiftUI
 import Turbo
 import UIKit
+import WebKit
 
-class AppCoordinator {
+class AppCoordinator: NSObject {
     var rootViewController: UIViewController { navigationController }
 
     func start() {
@@ -71,5 +73,25 @@ extension AppCoordinator: SessionDelegate {
         hostingController.view.frame = topViewController.view.frame
         topViewController.view.addSubview(hostingController.view)
         hostingController.didMove(toParent: topViewController)
+    }
+
+    func sessionDidLoadWebView(_ session: Session) {
+        session.webView.navigationDelegate = self
+    }
+}
+
+extension AppCoordinator: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard
+            navigationAction.navigationType == .linkActivated,
+            let url = navigationAction.request.url
+        else {
+            decisionHandler(.allow)
+            return
+        }
+
+        let safariViewController = SFSafariViewController(url: url)
+        navigationController.present(safariViewController, animated: true)
+        decisionHandler(.cancel)
     }
 }
